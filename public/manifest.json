@@ -21,10 +21,15 @@
   "background": {
     "service_worker": "background.js"
   },
+
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"]
+      "matches": ["https://github.com/*/*/compare/*"],
+      "js": ["content_create_pr.js"]
+    },
+    {
+      "matches": ["https://github.com/*/*/pull/*"],
+      "js": ["content_merge_pr.js"]
     }
   ],
   "permissions": ["scripting"],
