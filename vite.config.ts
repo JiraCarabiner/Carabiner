@@ -7,7 +7,16 @@ import { defineConfig } from 'vite';
 import manifest from './public/manifest.config';
 
 export default defineConfig({
-  plugins: [react(), tsconfigPaths(), crx({ manifest })],
+  plugins: [
+    react(),
+    tsconfigPaths(),
+    crx({
+      manifest,
+      contentScripts: {
+        injectCss: true,
+      },
+    }),
+  ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
