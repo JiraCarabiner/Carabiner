@@ -1,14 +1,12 @@
 import { useState } from 'react';
 import reactLogo from '@/assets/react.svg';
 import viteLogo from '@/assets/vite.svg';
-import JiraButton from '@/components/JiraButton';
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <div className="max-w-screen-md mx-auto p-8 text-center flex-col flex justify-center items-center">
-      <JiraButton />
       <div className="flex justify-center items-center space-x-4 mb-8 gap-4">
         <a href="https://vite.dev" target="_blank">
           <img

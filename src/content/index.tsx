@@ -2,12 +2,13 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import ContentApp from './App';
 import styles from '@/styles/index.css?inline';
+import contentStyles from '@/styles/content.css?inline';
 import { createShadowRoot } from '@/lib/createShadowRoot';
+import { ShadowRootContext } from '@/lib/ShadowRootContext';
 
 function injectContentApp() {
   console.log('Injecting content app...');
 
-  // 이미 'extension-content-root'가 있는지 확인
   if (document.getElementById('extension-content-root')) {
     console.log('Content app already injected.');
     return;
@@ -21,12 +22,16 @@ function injectContentApp() {
     host.id = 'extension-content-root';
     createPRButton.prepend(host);
 
-    const shadowRoot = createShadowRoot(host, [styles]);
+    // shadow DOM 생성 및 shadowRoot 참조 받기
+    const shadowRoot = createShadowRoot(host, [styles, contentStyles]);
 
+    // shadowRoot를 context로 전달하여 내부 컴포넌트에서 사용할 수 있도록 함
     createRoot(shadowRoot).render(
-      <React.StrictMode>
-        <ContentApp />
-      </React.StrictMode>
+      <ShadowRootContext.Provider value={shadowRoot}>
+        <React.StrictMode>
+          <ContentApp />
+        </React.StrictMode>
+      </ShadowRootContext.Provider>
     );
   }
 }
