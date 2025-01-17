@@ -29,6 +29,12 @@ const manifest = {
       js: ['src/content/index.tsx'],
     },
   ],
+  web_accessible_resources: [
+    {
+      resources: ['assets/js/*.js', 'assets/css/*.css', '*.webp', '*.png', '*.jpg', '*.jpeg', '*.gif'],
+      matches: ['*://*/*'],
+    },
+  ],
   permissions: ['scripting'],
   host_permissions: ['https://*/*', 'http://*/*'],
 } as ManifestV3Export;
