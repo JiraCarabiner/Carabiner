@@ -31,7 +31,7 @@ const manifest = {
   ],
   web_accessible_resources: [
     {
-      resources: ['assets/js/*.js', 'assets/css/*.css', '*.webp', '*.png', '*.jpg', '*.jpeg', '*.gif'],
+      resources: ['assets/*.js', 'assets/*.css', '*.webp', '*.png', '*.jpg', '*.jpeg', '*.gif'],
       matches: ['*://*/*'],
     },
   ],

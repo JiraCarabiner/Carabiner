@@ -1,11 +1,6 @@
-import JiraButton from '@/components/JiraButton';
-
+import JiraPopover from '@/content/components/JiraPopover';
 const ContentApp = () => {
-  return (
-    <div>
-      <JiraButton />
-    </div>
-  );
+  return <JiraPopover />;
 };
 
 export default ContentApp;
