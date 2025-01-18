@@ -1,6 +1,6 @@
 import JiraPopover from '@/content/components/JiraPopover';
-const ContentApp = () => {
+const App = () => {
   return <JiraPopover />;
 };
 
-export default ContentApp;
+export default App;

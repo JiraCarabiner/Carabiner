@@ -1,8 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import ContentApp from './App';
+import App from './App';
 import styles from '@/styles/index.css?inline';
-import contentStyles from '@/styles/content.css?inline';
 import { createShadowRoot } from '@/lib/createShadowRoot';
 import { ShadowRootContext } from '@/lib/ShadowRootContext';
 
@@ -18,18 +17,29 @@ function injectContentApp() {
     '#new_pull_request > div > div.Layout-main > div > div:nth-child(2) > div > div.d-flex.flex-justify-end.flex-items-center.flex-wrap.gap-1 > div.d-flex.flex-justify-end > div'
   );
   if (createPRButton) {
+    // chrome.runtime.sendMessage(
+    //   {
+    //     action: 'fetchJiraData',
+    //     jql: 'sprint in openSprints() AND issuetype = Task AND assignee = currentUser()',
+    //     githubLink: window.location.href,
+    //   },
+    //   (response) => {
+    //     console.log('API Response:', response);
+    //   }
+    // );
+
     const host = document.createElement('div');
     host.id = 'extension-content-root';
     createPRButton.prepend(host);
 
     // shadow DOM 생성 및 shadowRoot 참조 받기
-    const shadowRoot = createShadowRoot(host, [styles, contentStyles]);
+    const shadowRoot = createShadowRoot(host, [styles]);
 
     // shadowRoot를 context로 전달하여 내부 컴포넌트에서 사용할 수 있도록 함
     createRoot(shadowRoot).render(
       <ShadowRootContext.Provider value={shadowRoot}>
         <React.StrictMode>
-          <ContentApp />
+          <App />
         </React.StrictMode>
       </ShadowRootContext.Provider>
     );
