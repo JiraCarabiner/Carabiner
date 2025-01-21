@@ -6,7 +6,16 @@ function App() {
   const [count, setCount] = useState(0);
 
   return (
-    <div className="max-w-screen-md mx-auto p-8 text-center flex-col flex justify-center items-center">
+    <div
+      className="max-w-screen-md p-8 text-center flex flex-col justify-center items-center"
+      style={{
+        margin: 0,
+        display: 'flex',
+        placeItems: 'center',
+        minWidth: '320px',
+        minHeight: '100vh',
+      }}
+    >
       <div className="flex justify-center items-center space-x-4 mb-8 gap-4">
         <a href="https://vite.dev" target="_blank">
           <img

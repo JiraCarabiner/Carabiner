@@ -10,6 +10,9 @@ export default defineConfig({
   plugins: [
     react(),
     tsconfigPaths(),
+    /**
+     * npm run dev 시 주석 처리 해주세요
+     */
     crx({
       manifest,
       contentScripts: {
@@ -20,6 +23,14 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+    },
+  },
+  build: {
+    rollupOptions: {
+      input: {
+        popup: 'index.html',
+        options: 'options.html', // 옵션 페이지 추가
+      },
     },
   },
 });

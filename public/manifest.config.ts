@@ -35,7 +35,8 @@ const manifest = {
       matches: ['*://*/*'],
     },
   ],
-  permissions: ['scripting'],
+  options_page: '/options.html',
+  permissions: ['scripting', 'storage', 'activeTab'],
   host_permissions: ['https://*/*', 'http://*/*'],
 } as ManifestV3Export;
 
