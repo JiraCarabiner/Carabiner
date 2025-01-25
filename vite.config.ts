@@ -13,12 +13,12 @@ export default defineConfig({
     /**
      * npm run dev 시 주석 처리 해주세요
      */
-    crx({
-      manifest,
-      contentScripts: {
-        injectCss: true,
-      },
-    }),
+    // crx({
+    //   manifest,
+    //   contentScripts: {
+    //     injectCss: true,
+    //   },
+    // }),
   ],
   resolve: {
     alias: {
