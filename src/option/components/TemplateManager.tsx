@@ -68,7 +68,7 @@ export default function TemplateManager() {
               <CardTitle className="text-sm font-bold">{tpl.title}</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm whitespace-pre-wrap overflow-x-scroll">{tpl.content}</p>
+              <p className="text-sm whitespace-pre-wrap overflow-x-auto">{tpl.content}</p>
               {/* 플레이스홀더 미리보기 (optional) */}
               <div className="mt-2 text-xs text-gray-600">
                 Placeholders: {extractPlaceholders(tpl.content).join(', ') || 'None'}
