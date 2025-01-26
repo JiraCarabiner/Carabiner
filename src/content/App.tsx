@@ -10,6 +10,8 @@ import RequirementsImage from '@/assets/jira/requirements.svg';
 
 export default function App() {
   const [response, setResponse] = useState<any>(null);
+
+  // npm run dev 시에는 주석 처리 해주세요
   useEffect(() => {
     chrome.runtime.sendMessage(
       {

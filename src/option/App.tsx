@@ -7,6 +7,7 @@ import { PlusCircle, Trash2, Save } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useToast } from '@/hooks/use-toast';
 import { Toaster } from '@/components/ui/toaster';
+import TemplateManager from './components/TemplateManager';
 
 interface Mapping {
   github: string;
@@ -19,6 +20,7 @@ const Options: React.FC = () => {
   const [mappings, setMappings] = useState<Mapping[]>([{ github: '', jira: '' }]);
   const { toast } = useToast();
 
+  // npm run dev 시에는 주석 처리 해주세요
   useEffect(() => {
     chrome.storage.sync.get(['email', 'apiToken', 'mappings'], (data) => {
       setEmail(data.email || '');
@@ -154,6 +156,14 @@ const Options: React.FC = () => {
               <Button onClick={handleAddMapping} variant="outline" className="w-full mt-4">
                 <PlusCircle className="mr-2 h-4 w-4" /> Add Mapping
               </Button>
+            </CardContent>
+          </Card>
+          <Card className="h-full flex flex-col shadow-none">
+            <CardHeader>
+              <CardTitle>Pull Request Template</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <TemplateManager />
             </CardContent>
           </Card>
         </div>
