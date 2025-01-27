@@ -149,7 +149,7 @@ title: "[PROJECT-456] 상세 PR 제목"
 `,
         },
       ];
-      chrome.storage.sync.set({ templates: defaultTemplates });
+      chrome.storage.sync.set({ templates: defaultTemplates, defaultTemplateId: 'default-en' });
     }
   });
 });

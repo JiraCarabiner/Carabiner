@@ -14,6 +14,7 @@ import { PlusCircle, Trash2 } from 'lucide-react';
 
 export default function TemplateManager() {
   const [templates, setTemplates] = useState<Template[]>([]);
+  const [defaultTemplateId, setDefaultTemplateId] = useState<string>('');
   const [newTitle, setNewTitle] = useState('');
   const [newContent, setNewContent] = useState('');
 
@@ -21,22 +22,27 @@ export default function TemplateManager() {
   // 한 번만 실행되어야 하므로 두 번째 인자로 빈 배열을 전달
   // npm run dev 시에는 주석 처리 해주세요
   useEffect(() => {
-    chrome.storage.sync.get(['templates'], (data) => {
-      if (data.templates) {
-        setTemplates(data.templates);
-      }
+    chrome.storage.sync.get(['templates', 'defaultTemplateId'], (data) => {
+      if (data.templates) setTemplates(data.templates);
+      if (data.defaultTemplateId) setDefaultTemplateId(data.defaultTemplateId);
     });
   }, []);
 
+  const handleSetDefaultTemplate = (id: string) => {
+    chrome.storage.sync.set({ defaultTemplateId: id }, () => {
+      setDefaultTemplateId(id);
+    });
+  };
+
   // 템플릿 저장 (전체)
-  function saveTemplates(updated: Template[]) {
+  const saveTemplates = (updated: Template[]) => {
     chrome.storage.sync.set({ templates: updated }, () => {
       setTemplates(updated);
     });
-  }
+  };
 
   // 새 템플릿 추가
-  function handleAddTemplate() {
+  const handleAddTemplate = () => {
     if (!newTitle.trim() || !newContent.trim()) {
       alert('Title and content are required.');
       return;
@@ -49,13 +55,13 @@ export default function TemplateManager() {
     saveTemplates([...templates, newTemplate]);
     setNewTitle('');
     setNewContent('');
-  }
+  };
 
   // 템플릿 삭제
-  function handleDeleteTemplate(id: string) {
+  const handleDeleteTemplate = (id: string) => {
     const updated = templates.filter((t) => t.id !== id);
     saveTemplates(updated);
-  }
+  };
 
   return (
     <div className="space-y-4">
@@ -69,10 +75,13 @@ export default function TemplateManager() {
             </CardHeader>
             <CardContent>
               <p className="text-sm whitespace-pre-wrap overflow-x-auto">{tpl.content}</p>
-              {/* 플레이스홀더 미리보기 (optional) */}
+              {/* 플레이스홀더 미리보기 */}
               <div className="mt-2 text-xs text-gray-600">
                 Placeholders: {extractPlaceholders(tpl.content).join(', ') || 'None'}
               </div>
+              <Button className="mt-4" variant="outline" onClick={() => handleSetDefaultTemplate(tpl.id)}>
+                {defaultTemplateId === tpl.id ? 'Default (Selected)' : 'Set as Default'}
+              </Button>
               <Button
                 variant="ghost"
                 onClick={() => handleDeleteTemplate(tpl.id)}
