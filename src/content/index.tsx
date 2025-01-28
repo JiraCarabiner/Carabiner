@@ -4,8 +4,10 @@ import App from './App';
 import styles from '@/styles/index.css?inline';
 import { createShadowRoot } from '@/lib/createShadowRoot';
 import { ShadowRootContext } from '@/lib/ShadowRootContext';
+import { autoFillPullRequest } from './prAutoFill';
 
 function injectContentApp() {
+  // 이미 컴포넌트가 존재할 경우 중복 추가 방지
   if (document.getElementById('extension-content-root')) {
     return;
   }
@@ -36,6 +38,9 @@ if (createPRButton) {
   createPRButton.addEventListener('click', () => {
     console.log('Create PR Button clicked!');
     injectContentApp(); // 버튼 클릭 시 컴포넌트를 추가
+    setTimeout(() => {
+      autoFillPullRequest(); // 버튼 클릭 후 PR 자동 채우기
+    }, 300);
   });
 } else {
   console.log('Create PR Button not found.');
@@ -49,6 +54,9 @@ if (document.readyState === 'loading') {
       button.addEventListener('click', () => {
         console.log('Create PR Button clicked after DOMContentLoaded!');
         injectContentApp();
+        setTimeout(() => {
+          autoFillPullRequest(); // 버튼 클릭 후 PR 자동 채우기
+        }, 300);
       });
     }
   });
