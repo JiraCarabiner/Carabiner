@@ -15,25 +15,31 @@ interface Mapping {
 }
 
 const Options: React.FC = () => {
+  // User Information
   const [email, setEmail] = useState('');
   const [apiToken, setApiToken] = useState('');
+  const [openaiKey, setOpenaiKey] = useState('');
+
+  // Domain Mapping
   const [mappings, setMappings] = useState<Mapping[]>([{ github: '', jira: '' }]);
+
   const { toast } = useToast();
 
   // npm run dev 시에는 주석 처리 해주세요
   useEffect(() => {
-    chrome.storage.sync.get(['email', 'apiToken', 'mappings'], (data) => {
+    chrome.storage.sync.get(['email', 'apiToken', 'openaiKey', 'mappings'], (data) => {
       setEmail(data.email || '');
       setApiToken(data.apiToken || '');
+      setOpenaiKey(data.openaiKey || '');
       setMappings(data.mappings && data.mappings.length > 0 ? data.mappings : [{ github: '', jira: '' }]);
     });
   }, []);
 
   const handleSave = () => {
-    if (!email.trim() || !apiToken.trim()) {
+    if (!email.trim() || !apiToken.trim() || !openaiKey.trim()) {
       toast({
         title: 'Error',
-        description: '이메일과 API 토큰을 입력해 주세요.',
+        description: 'User Information을 모두 입력해 주세요.',
         variant: 'destructive',
       });
       return;
@@ -48,7 +54,7 @@ const Options: React.FC = () => {
         return;
       }
     }
-    chrome.storage.sync.set({ email, apiToken, mappings }, () => {
+    chrome.storage.sync.set({ email, apiToken, openaiKey, mappings }, () => {
       toast({
         title: 'Success',
         description: 'Settings saved successfully!',
@@ -56,6 +62,7 @@ const Options: React.FC = () => {
     });
   };
 
+  // Domain Mapping handlers
   const handleMappingChange = (index: number, field: keyof Mapping, value: string) => {
     const newMappings = [...mappings];
     newMappings[index] = { ...newMappings[index], [field]: value };
@@ -106,6 +113,16 @@ const Options: React.FC = () => {
                   placeholder="your-api-token"
                   value={apiToken}
                   onChange={(e) => setApiToken(e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="openaiKey">OpenAI Key</Label>
+                <Input
+                  id="openaiKey"
+                  type="password"
+                  placeholder="sk-..."
+                  value={openaiKey}
+                  onChange={(e) => setOpenaiKey(e.target.value)}
                 />
               </div>
             </CardContent>
