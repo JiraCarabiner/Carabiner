@@ -4,6 +4,7 @@ import App from './App';
 import styles from '@/styles/shadow.css?inline';
 import { createShadowRoot } from '@/lib/createShadowRoot';
 import { ShadowRootContext } from '@/lib/ShadowRootContext';
+import { autoFillPullRequest } from './prAutoFill';
 
 // const createPRButton = document.querySelector(
 //   '#new_pull_request > div > div.Layout-main > div > div:nth-child(2) > div > div.d-flex.flex-justify-end.flex-items-center.flex-wrap.gap-1 > div.d-flex.flex-justify-end > div'
@@ -47,9 +48,17 @@ const mount = () => {
 
 // DOMContentLoaded 이벤트가 발생할 때 마운트 함수 실행
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', mount);
+  document.addEventListener('DOMContentLoaded', () => {
+    mount();
+    setTimeout(() => {
+      autoFillPullRequest();
+    }, 300);
+  });
 } else {
   mount();
+  setTimeout(() => {
+      autoFillPullRequest();
+    }, 300);
 }
 
 // 버튼을 찾고 이벤트 리스너 추가
